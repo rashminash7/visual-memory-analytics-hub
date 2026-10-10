@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Memory & Analytics Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">BEGINNER CAPSTONE · DAYS 06 & 07</p>
+            <h1>Visual Memory & Analytics Hub</h1>
+            <p class="subtitle">
+                Explore memory, collection metrics, asynchronous events and cache behavior.
+            </p>
+        </div>
+        <span class="api-pill">
+            <span class="status-dot"></span>
+            API Dashboard
+        </span>
+    </header>
+
+    <nav class="tabs" aria-label="Main screens">
+        <button class="tab active" data-screen="screen01">
+            01 · Memory Playground
+        </button>
+        <button class="tab" data-screen="screen02">
+            02 · Live Analytics
+        </button>
+        <button class="tab" data-screen="screen03">
+            03 · System Health
+        </button>
+    </nav>
+
+    <main class="page">
+
+        <!-- SCREEN 01: MEMORY PLAYGROUND & WORKSPACE -->
+        <section class="screen active" id="screen01">
+
+            <div class="screen-heading">
+                <div>
+                    <p class="eyebrow">SCREEN 01</p>
+                    <h2>Memory Playground & Workspace</h2>
+                </div>
+                <span id="memoryStatus" class="status-label" role="status">
+                    Connecting...
+                </span>
+            </div>
+
+            <div class="memory-workspace">
+
+                <aside class="panel actions-panel">
+                    <h3>Memory Actions</h3>
+
+                    <p class="muted">
+                        Temporary function frames disappear.
+                        Heap objects remain until cleared.
+                    </p>
+
+                    <button id="executeFunctionBtn" class="button primary">
+                        Execute Local Function
+                    </button>
+
+                    <button id="allocateDatasetBtn" class="button">
+                        Allocate Large Dataset
+                    </button>
+
+                    <button id="clearStorageBtn" class="button danger-outline">
+                        Clear Storage
+                    </button>
+
+                    <div class="hint">
+                        <strong>Stack</strong> — short-lived function frames
+                        <br>
+                        <strong>Heap</strong> — persistent allocated records
+                    </div>
+                </aside>
+
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Memory Simulator</h3>
+                            <p class="muted">Live state from the Flask API</p>
+                        </div>
+                    </div>
+
+                    <div class="memory-layout">
+
+                        <div class="memory-section">
+                            <div class="section-title">
+                                <h4>Stack Tray</h4>
+                                <span>Temporary frames</span>
+                            </div>
+
+                            <div id="stackTray" class="memory-container">
+                                <p class="empty">No active frames</p>
+                            </div>
+                        </div>
+
+                        <div class="memory-section">
+                            <div class="section-title">
+                                <h4>Heap Grid</h4>
+                                <span>Persistent objects</span>
+                            </div>
+
+                            <div id="heapGrid" class="memory-container">
+                                <p class="empty">No allocated objects</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+        </section>
+
+
+        <!-- SCREEN 02: LIVE ANALYTICS & STREAM -->
+        <section class="screen" id="screen02">
+
+            <div class="screen-heading">
+                <div>
+                    <p class="eyebrow">SCREEN 02</p>
+                    <h2>Live Analytics & Stream</h2>
+                    <p class="muted">
+                        Async mock telemetry, collection metrics and sorted-record search.
+                    </p>
+                </div>
+
+                <span class="live-pill">
+                    <span class="status-dot"></span>
+                    Live Polling
+                </span>
+            </div>
+
+            <div class="metrics-grid">
+                <article class="metric-card">
+                    <span>Total Items Stored</span>
+                    <strong id="totalItems">0</strong>
+                    <small>Heap records</small>
+                </article>
+
+                <article class="metric-card">
+                    <span>Active Load Factor</span>
+                    <strong id="loadFactor">0%</strong>
+                    <small id="resizeInfo">Capacity: 4 · Resizes: 0</small>
+                </article>
+
+                <article class="metric-card">
+                    <span>Cache Hits</span>
+                    <strong id="cacheHits">0</strong>
+                    <small>Results served from cache</small>
+                </article>
+
+                <article class="metric-card">
+                    <span>Cache Misses</span>
+                    <strong id="cacheMisses">0</strong>
+                    <small>Results calculated</small>
+                </article>
+            </div>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Live Data Stream</h3>
+                        <p class="muted">
+                            Mock sensor events arrive through asynchronous API requests.
+                        </p>
+                    </div>
+                    <span id="streamStatus" class="status-label">
+                        Starting...
+                    </span>
+                </div>
+
+                <div id="dataStream" class="event-stream" aria-live="polite">
+                    <p class="empty">Waiting for incoming events...</p>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Two-Pointer Search</h3>
+                        <p class="muted">
+                            Left and right cursors move inward through sorted heap records.
+                        </p>
+                    </div>
+                </div>
+
+                <form id="searchForm" class="inline-form">
+                    <label class="sr-only" for="searchTarget">
+                        Target data size
+                    </label>
+
+                    <input
+                        type="number"
+                        id="searchTarget"
+                        placeholder="Enter target data size"
+                        required
+                    >
+
+                    <button id="searchBtn" class="button primary" type="submit">
+                        Search
+                    </button>
+                </form>
+
+                <div id="searchResult" class="feedback" role="status">
+                    Search result will appear here.
+                </div>
+
+                <div id="searchTable" class="search-table" aria-live="polite"></div>
+            </section>
+        </section>
+
+
+        <!-- SCREEN 03: SYSTEM HEALTH & CACHE CONTROL -->
+        <section class="screen" id="screen03">
+
+            <div class="screen-heading">
+                <div>
+                    <p class="eyebrow">SCREEN 03</p>
+                    <h2>System Health & Cache Control</h2>
+                    <p class="muted">
+                        Inspect cached results, evict entries and test defensive error handling.
+                    </p>
+                </div>
+
+                <span class="health-pill">Diagnostics</span>
+            </div>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Cache Inspector Grid</h3>
+                        <p class="muted">
+                            Cached search results and access counts.
+                        </p>
+                    </div>
+
+                    <button id="refreshCacheBtn" class="button small">
+                        Refresh
+                    </button>
+                </div>
+
+                <div id="cacheInspector" class="cache-grid">
+                    <p class="empty">Loading cache entries...</p>
+                </div>
+
+                <form id="evictForm" class="inline-form">
+                    <label class="sr-only" for="evictCacheKey">
+                        Cache key
+                    </label>
+
+                    <input
+                        type="text"
+                        id="evictCacheKey"
+                        placeholder="Enter target key, e.g. 100"
+                    >
+
+                    <button id="evictCacheBtn" class="button" type="submit">
+                        Evict Key
+                    </button>
+
+                    <button id="clearCacheBtn" class="button danger-outline" type="button">
+                        Evict All
+                    </button>
+                </form>
+
+                <div id="cacheStatus" class="feedback" role="status">
+                    Cache inspector ready.
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Chaos & Error Trigger</h3>
+                        <p class="muted">
+                            Deliberately test invalid payloads and simulated service failures.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button id="invalidRequestBtn" class="button">
+                        Test Invalid Request · 400
+                    </button>
+
+                    <button id="serviceFailureBtn" class="button">
+                        Simulate Timeout · 503
+                    </button>
+
+                    <button id="optimisticLockBtn" class="button">
+                        Simulate Optimistic Lock
+                    </button>
+                </div>
+
+                <div id="errorStatus" class="feedback" role="status">
+                    System ready. No test triggered.
+                </div>
+
+                <div id="lockStatus" class="hint">
+                    Optimistic lock: waiting for a test.
+                </div>
+            </section>
+        </section>
+
+    </main>
+
+    <footer>
+        Visual Memory & Analytics Hub · Flask REST API
+        <br>
+        In-memory demo state resets when the server restarts.
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
